@@ -1,0 +1,102 @@
+<!-- <!doctype html>
+<html>
+  <head>
+    <title>Socket.IO Tests</title>
+    <style>
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      body { font: 13px Helvetica, Arial; }
+      form { background: #000; padding: 3px; position: fixed; bottom: 0; width: 100%; }
+      form input { border: 0; padding: 10px; width: 90%; margin-right: .5%; }
+      form button { width: 9%; background: rgb(130, 224, 255); border: none; padding: 10px; }
+      #messages { list-style-type: none; margin: 0; padding: 0; }
+      #messages li { padding: 5px 10px; }
+      #messages li:nth-child(odd) { background: #eee; }
+      #messages { margin-bottom: 40px }
+    </style>
+  </head>
+  <body onload="getDataAction()"> 
+    <ul id="messages"></ul>
+    <form action="">
+      <input id="m" autocomplete="off" /><button onclick="insertDataAction()">Send</button>
+    </form>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script>
+      $(function () {
+        var socket = io();
+        $('form').submit(function(e){
+          e.preventDefault(); // prevents page reloading
+          socket.emit('chat message', $('#m').val());
+          $('#m').val('');
+          return false;
+        });
+        socket.on('chat message', function(msg){
+          $('#messages').append($('<li>').text(msg));
+        });
+      });
+
+
+      
+      
+      const getDataAction = async () => {
+        const response = await fetch('http://localhost:3000/api/v1/messages');
+        const myJson = await response.json(); //extract JSON from the http response
+        // do something with myJson
+        alert(JSON.stringify(myJson));
+        //alert(myJson.length);
+        //$('#messages').append($('<li>').text(JSON.stringify(myJson)));
+
+          var data = JSON.parse(JSON.stringify(myJson));
+          //alert("Type of data is : "+typeof(data));
+
+       
+          for (i = 0; i < myJson.length; ++i) {
+              //alert("This is id "+i+" = "+ myJson[i].message);
+
+              $('#messages').append($('<li>').text(myJson[i].message));
+          }
+       
+
+      }
+
+
+
+      const insertDataAction = async () => {     
+        var word = document.getElementById("m").value;//by id
+        alert(word);
+        var details = {
+              'message': word,
+              //'password': 'Password!',
+              //'grant_type': 'password'
+              };
+
+          var formBody = [];
+          for (var property in details) {
+            var encodedKey = encodeURIComponent(property);
+            var encodedValue = encodeURIComponent(details[property]);
+            formBody.push(encodedKey + "=" + encodedValue);
+          }
+          formBody = formBody.join("&"); 
+
+        
+        const response = await fetch('http://localhost:3000/api/v1/messages', {
+          method: 'POST',
+          body: formBody, // string or object
+
+         /*  body: new URLSearchParams({
+            'message': 'hello',
+            //'password': 'Password!',
+            //'grant_type': 'password'
+          }), */
+          headers: {
+            'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
+          }
+        });
+        const myJson = await response.json(); //extract JSON from the http response
+        // do something with myJson
+
+        alert("This is word");
+      }
+    </script>
+  </body>
+</html> -->
